@@ -16,6 +16,23 @@ var PORT = 8080;
 var server = http.createServer(handleRequest);
 
 
+
+
+function renderHTML(filePath,res){
+    return fs.readFile(__dirname + filePath, function(err,data){
+    //   app.get(__dirname + filePath, function(err,data){
+    //     res.sendFile(__dirname + filePath, {root:__dirname})
+    //   });  
+        if (err) throw err;
+        //file system data=if error, throw error
+        // We then respond to the client with the HTML page by specifically telling the browser that we are delivering
+   // an html file.
+        res.writeHead(200,{"Content-Type":"text/html"});
+        res.end(data);
+    });
+}
+
+
 // When we visit different urls, read and respond with different files
 //this is the switch 
 // Pass the handleRequest function to empower it with functionality.
@@ -28,13 +45,18 @@ function handleRequest(req,res){
             return renderHTML("index.html",res);
     
         case"/movies":
+        // return renderHTML("movies.html",res);
+       
             
         case"/food":
+        
+
          
         case"/frameworks":
+
         // case"/portfolio":
         //     return displayPortfolio(res);
-                return renderHTML(path + ".html", res);
+                // return renderHTML(path + ".html", res);
     
         default:
             // return index.html(path,res);
@@ -44,16 +66,7 @@ function handleRequest(req,res){
     
 };
 
-function renderHTML(filePath,res){
-    return fs.readFile(__dirname + filePath, function(err,data){
-        if (err) throw err;
-        //file system data=if error, throw error
-        // We then respond to the client with the HTML page by specifically telling the browser that we are delivering
-   // an html file.
-        res.writeHead(200,{"Content-Type":"text/html"});
-        res.end(data);
-    });
-}
+
  
 // * Create a website with four routes:
 //   * Home
