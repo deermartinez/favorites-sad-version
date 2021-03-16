@@ -1,9 +1,9 @@
 // Require dependencies
 //we always need out http
-var http = require('http');
+var http = require("http");
 
 //import the filesystem module
-var fs = require('fs');
+var fs = require("fs");
 //The fs.appendFile() method is used to asynchronously append the given data to a file.
 // A new file is created if it does not exist. The options parameter can be used to modify 
 //the behavior of the operation.
@@ -13,19 +13,19 @@ var fs = require('fs');
 var PORT = 8080;
 
 // Capture the url the request is made to
-var server=http.createServer(handleRequest);
+var server = http.createServer(handleRequest);
 
 
 // When we visit different urls, read and respond with different files
 //this is the switch 
 // Pass the handleRequest function to empower it with functionality.
 function handleRequest(req,res){
-    var path=req.url;
+    var path = req.url;
     //url request is made for/to
     switch(path){
         case"/":
             // return displayRoot(res);
-            return renderHTML('index.html',res);
+            return renderHTML("index.html",res);
     
         case"/movies":
             
@@ -38,7 +38,7 @@ function handleRequest(req,res){
     
         default:
             // return index.html(path,res);
-            return display 404(path,res);
+            return display404(path,res);
     }
     // default to rendering index.html, if none of above cases are hit
     
