@@ -72,7 +72,9 @@ req.on("end",function(){
 };
 //start the server
 
-
+server.listen(PORT, function(){
+    console.log("Server is listening on: http://localhost:" + PORT);
+});
 
 
 
