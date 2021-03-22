@@ -4,7 +4,7 @@ const fs = require("fs");
 const PORT = 8080;
 
 //server
-const server = http.createServer(handleRequest)
+const server = http.createServer(handleRequest);
 
 function handleRequest(req,res){
     const path = req.url;
@@ -25,7 +25,20 @@ function handleRequest(req,res){
 //create above pages
 function renderWelcomePage(req,res){
     //use the required file system module/package to read and pull from index.html
-    fs.readFile(__dirname + "/index.html", function(err,data)
+    fs.readFile(__dirname + "/index.html", function(err,data){
+        if(err){
+            res.writeHead(500,{"Content-Type":"text/html"});
+            
+            //response end
+            res.end(
+                "<html><head><title>OOPS</title></head><body><h1>Something went wrong</h1></body></html>"
+                //html won't work on split up lines unless there are quotationmarks on every line
+            );
+        }else{
+            res.writeHead(200,{"Content-Type": "text/html"});
+            res.end(data);
+        }
+    }
     )
 };
 
@@ -34,15 +47,29 @@ function renderWelcomePage(req,res){
 //tell the browser that
 
 function renderThankYouPage(req,res){
-    const myHTML = "";
-};
+    var requestData = "";
+    var myHTML = "<html><head><title>Node</title></head><body><h1>No data yet</h1></body></html>";
+
 
 
 //when the server recieves data it will store to requestData
 //.enit="fires" event
+    req.on("data", function(data){
+        requestData+=data;
+        console.log("You just posted some data to the server: \n", requestData);
+
+        myHTML = "<html><head><title>Hello</title></head><body>" +
+        "<h1>Thank you for the data!:</h1><code>"+
+        requestData +
+        "</code></body></html>";
+    })
 
 //request end
 
+req.on("end",function(){
+    res.writeHead(200,{"Content-Type":"text/html"});
+});
+};
 //start the server
 
 
